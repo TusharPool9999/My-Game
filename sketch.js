@@ -21,7 +21,7 @@ var safeintro,safeintroimg
 var move,moveimg
 var reset,resetimg
 
-function preload(){
+/*function preload(){
 
 manjumpright=loadImage("images/run4.PNG")
 building1img=loadImage("images/building.png")
@@ -45,7 +45,7 @@ safeintroimg=loadImage("images/healStone.jpg")
 moveimg=loadImage("images/arrow keys.png")
 resetimg=loadImage("images/Reset.png")
 
-}
+}*/
 
 function setup(){
   createCanvas(600,600)
@@ -121,17 +121,20 @@ function setup(){
   heart10.scale=0.2
   heart10.visible=false;
 
+  move=createSprite(374,240,10,10)
+  move.addImage("move",moveimg)
+  move.scale=0.16
+  move.visible=false
+  
   rockintro=createSprite(358,129,10,10)
   rockintro.addImage("intro",rockintroimg)
   rockintro.scale=0.2
+  rockintro.visible=false
 
   safeintro=createSprite(371,179,10,10)
   safeintro.addImage("safe",safeintroimg)
   safeintro.scale=0.2
-
-  move=createSprite(374,240,10,10)
-  move.addImage("move",moveimg)
-  move.scale=0.16
+  safeintro.visible=false
 
 
 
@@ -156,10 +159,11 @@ function draw(){
  
  gamestate="PLAY"
  }
+
+ 
  if (gamestate==="PLAY"){
   building1.velocityY = (4+3*score/10);
   building2.velocityY = (4+3*score/10)
- 
 
   
 
@@ -195,7 +199,7 @@ function draw(){
   }
   
 
-  rockintro.visible=false
+ rockintro.visible=false
   safeintro.visible=false
   move.visible=false
 
@@ -311,7 +315,8 @@ if(man.collide(obstacleGroup)){
     stroke("red")
     textSize(20)
     text("Game_Over",250,200)
-    text("Score: "+ score, 250,220);
+    textSize(17)
+    text("Your Score: "+ score, 225,220);
   //score=0
     man.destroy();
   
@@ -321,11 +326,13 @@ if(man.collide(obstacleGroup)){
   }
  
  drawSprites();
+ if(gamestate==="serve"){
+  reset.visible=false
+  rockintro.visible=true
+  safeintro.visible=true
+  move.visible=true
 
-
-
-
-if(gamestate==="serve"){
+  
   strokeWeight("3")
   textSize(20)
   stroke("white")
@@ -337,9 +344,13 @@ if(gamestate==="serve"){
   text("",220,200)
   text("",200,220);
   text("",170,240)
- 
+
   
 }
+
+
+
+
 stroke("red")
 stroke("white")
 textSize(30)
@@ -397,5 +408,7 @@ function healStone(){
 function Reset(){
   gamestate="serve"
   score=0
+  lives=1,2,3
+  man.visible=true
 
 }
